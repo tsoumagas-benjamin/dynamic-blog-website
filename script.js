@@ -10,6 +10,12 @@ const blogTitle = document.getElementById("title");
 const blogContent = document.getElementById("content");
 const blogImage = document.getElementById("image");
 
+// Use DOM manipulation to select the selected blog spaces on our website
+const selectedTitle = document.getElementById("selected-title");
+const selectedContent = document.getElementById("selected-content");
+const selectedImage = document.getElementById("selected-image");
+const editButton = document.getElementById("edit-button");
+
 // Content for each of the blog pages
 const techBlogContent = "This blog is made for discussing new technologies and their applications. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 const envBlogContent = "This blog will discuss environmental trends and ways to save the environment. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
@@ -31,6 +37,7 @@ function loadBlogData() {
 function getBlogData() {
     let title = blogTitle.value;
     let content = blogContent.value;
+    let image = blogImage.value;
     if (title === "") {
         console.log("Missing title");
         return;
@@ -41,6 +48,38 @@ function getBlogData() {
     }
     localStorage.setItem("new-blog-title", title);
     localStorage.setItem("new-blog-content", content);
+    localStorage.setItem("new-blog-image", image);
+    console.log("New blog post saved");
 }
+
+// Function to display created post data on page load
+function displayBlog() {
+    selectedTitle.innerHTML = localStorage.getItem("new-blog-title");
+    selectedContent.innerHTML = localStorage.getItem("new-blog-content");
+    selectedImage.innerHTML = localStorage.getItem("new-blog-image");
+}
+
+// Function to allow editing of content on the post.html page
+function editBlog() {
+    // Allow content to be edited if the edit button is clicked
+    if (editButton.innerHTML === "Edit") {
+        selectedTitle.setAttribute("contenteditable", true);
+        selectedContent.setAttribute("contenteditable", true);
+        editButton.innerHTML = "Save";
+        return;
+    // Allow the edited content to be saved if the edit button saying submit is clicked
+    } else {
+        selectedTitle.setAttribute("contenteditable", false);
+        selectedContent.setAttribute("contenteditable", false);
+        localStorage.setItem("new-blog-title", selectedTitle.innerHTML);
+        localStorage.setItem("new-blog-content", selectedContent.innerHTML);
+        editButton.innerHTML = "Edit";
+        return;
+    }
+}
+
+submitButton.addEventListener("click", getBlogData);
+document.addEventListener("DOMContentLoaded", displayBlog);
+editButton.addEventListener("click", editBlog);
 
 loadBlogData();
