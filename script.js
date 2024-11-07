@@ -86,9 +86,9 @@ function deleteBlog() {
     localStorage.removeItem("new-blog-image");
 }
 
+// Add function triggers
+document.addEventListener("DOMContentLoaded", loadBlogData);
 submitButton.addEventListener("click", getBlogData);
 document.addEventListener("DOMContentLoaded", displayBlog);
 editButton.addEventListener("click", editBlog);
 deleteButton.addEventListener("click", deleteBlog);
-
-loadBlogData();
