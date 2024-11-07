@@ -15,6 +15,7 @@ const selectedTitle = document.getElementById("selected-title");
 const selectedContent = document.getElementById("selected-content");
 const selectedImage = document.getElementById("selected-image");
 const editButton = document.getElementById("edit-button");
+const deleteButton = document.getElementById("delete-button");
 
 // Content for each of the blog pages
 const techBlogContent = "This blog is made for discussing new technologies and their applications. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -78,8 +79,16 @@ function editBlog() {
     }
 }
 
+// Function to allow deletion of content on the post.html page
+function deleteBlog() {
+    localStorage.removeItem("new-blog-title");
+    localStorage.removeItem("new-blog-content");
+    localStorage.removeItem("new-blog-image");
+}
+
 submitButton.addEventListener("click", getBlogData);
 document.addEventListener("DOMContentLoaded", displayBlog);
 editButton.addEventListener("click", editBlog);
+deleteButton.addEventListener("click", deleteBlog);
 
 loadBlogData();
